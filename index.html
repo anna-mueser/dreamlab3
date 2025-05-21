@@ -8,7 +8,75 @@
 <h1>Give me a dream and I will lab the world</h1>
 <p>this adorable creature</p>
 
-  
+ <div class="column feed" data-equalizer="feed" data-equalizer-watch="feed">
+                      <div class="feed-container">
+                                                    <div id="video-feed" class="sticky-container">
+                              <div class="responsive-embed widescreen">
+                                  <div id="player"></div>
+                              </div><!-- .responsive-embed -->
+                              <div class="actions">
+                                  <a class="minimize"><span class="fa fa-angle-down"></span>Minimize</a>
+                                  <a class="expand"><span class="fa fa-angle-up"></span> Expand</a>
+                                  <a class="channel-back" href="#channel"><span class="fa fa-arrow-up"></span>Return to top</a>
+                              </div>
+                          </div><!-- .sticky-container -->
+
+                      </div><!-- .feed-container -->
+                      <script>
+                        var tag = document.createElement('script');
+                        tag.src = 'https://www.youtube.com/iframe_api';
+                        var firstScriptTag = document.getElementsByTagName('script')[0];
+                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                        var player,
+                          camStatus = document.getElementById('cam-status'),
+                          videoFeed = document.getElementById('video-feed');
+
+                        function onYouTubeIframeAPIReady () {
+                          player = new YT.Player('player', {
+                            height: '675',
+                            width: '1200',
+                                                          videoId: 'Oqsryf7ol4k',
+                            playerVars: {
+                              rel: 0,
+                              modestbranding: 1
+                            },
+                                                          events: {
+                              // 'onReady': onPlayerReady,
+                              'onStateChange': onPlayerStateChange,
+                              'onError': onPlayerError
+                            }
+                          });
+                        }
+
+                        function onPlayerError (event) {
+                          camStatus.classList.add('off');
+                          camStatus.innerHTML = 'off';
+                          console.log(event.data);
+                        }
+
+                        function onPlayerReady (event) {
+                                                      event.target.playVideo();
+                                                    }
+
+                        var done = false;
+
+                        function onPlayerStateChange (event) {
+                          if (event.data == YT.PlayerState.PLAYING && !done) {
+                            videoFeed.setAttribute('data-playing', 'playing');
+                          } else {
+                            videoFeed.setAttribute('data-playing', 'stopped');
+                          }
+                        }
+
+                        function playVideo() {
+                          player.playVideo();
+                        }
+                        function stopVideo() {
+                          player.stopVideo();
+                        }
+
+                      </script>
 
 </body>
 </html>
